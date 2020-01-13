@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const Usuario = require('../models/Usuario');
+const Usuario = require('../models/usuario');
 
 const ctrl = {};
 
