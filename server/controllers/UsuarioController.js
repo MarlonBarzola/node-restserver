@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-const Usuario = require('../models/usuario');
+const Usuario = require('../models/Usuario');
 
 const ctrl = {}
 
 ctrl.index = async (req, res) => {
 
-    let desde = req.query.pagina || 0;
+    let desde = req.query.pagina || 1;
     let limite = req.query.limite || 5;
 
     desde = Number(desde);
@@ -16,28 +16,28 @@ ctrl.index = async (req, res) => {
     let base = (desde - 1) * limite
 
     await Usuario.find({ estado: true }, 'nombre email role estado google img')
-            .skip(base)
-            .limit(limite)
-            .exec((err, usuarios) => {
+    .skip(base)
+    .limit(limite)
+    .exec((err, usuarios) => {
 
-                if(err) {
-                    return res.status(400).json({
-                        ok: false,
-                        err
-                    });
-                }
-
-                Usuario.countDocuments({ estado: true }, (err, conteo) => {
-
-                    res.json({
-                        ok: true,
-                        usuarios,
-                        total: conteo 
-                    });
-
-                });
-
+        if(err) {
+            return res.status(400).json({
+                ok: false,
+                err
             });
+        }
+
+        Usuario.countDocuments({ estado: true }, (err, conteo) => {
+
+            res.json({
+                ok: true,
+                usuarios,
+                total: conteo 
+            });
+
+        });
+
+    });
 
 }
 
