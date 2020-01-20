@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const UsuarioController = require('../controllers/UsuarioController');
 const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion');
+
+const UsuarioController = require('../controllers/UsuarioController');
+
 
 router.get('/usuario', verificaToken, UsuarioController.index);
 router.post('/usuario', [verificaToken, verificaAdminRole ], UsuarioController.crear);
